@@ -3,6 +3,7 @@ package com.qwert2603.retrobase_example;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.postgresql.Driver;
 
@@ -22,7 +23,11 @@ public class MainActivity extends AppCompatActivity {
         TextView textView = (TextView) findViewById(R.id.text_view);
 
         DataManager dataManager = new DataManager();
+
         dataManager.getAllRecordsFromDataBase()
                 .subscribe(records -> textView.setText(records.toString()));
+
+        dataManager.removeRecord(42)
+                .subscribe(id -> Toast.makeText(MainActivity.this, "Deleted record with id == " + id, Toast.LENGTH_SHORT).show());
     }
 }

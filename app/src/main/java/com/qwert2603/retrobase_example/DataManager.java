@@ -20,12 +20,12 @@ public class DataManager {
                 .compose(applySchedulers());
     }
 
-    public Observable<Object> insertRecord(DataBaseRecord dataBaseRecord) {
+    public Observable<Id> insertRecord(DataBaseRecord dataBaseRecord) {
         return mSpendDBRx.insertRecord(dataBaseRecord.getKind(), dataBaseRecord.getValue(), dataBaseRecord.getDate())
                 .compose(applySchedulers());
     }
 
-    public Observable<Object> removeRecord(int id) {
+    public Observable<Id> removeRecord(int id) {
         return mSpendDBRx.deleteRecord(id)
                 .compose(applySchedulers());
     }
