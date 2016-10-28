@@ -1,7 +1,7 @@
 package com.qwert2603.retrobase_example;
 
 import com.qwert2603.retrobase.generated.SpendDBImpl;
-import com.qwert2603.retrobase_rx.generated.SpendDBRx;
+import com.qwert2603.retrobase.rx.generated.SpendDBRx;
 
 import java.util.List;
 

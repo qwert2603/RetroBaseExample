@@ -40,5 +40,5 @@ dependencies {
     compile 'org.postgresql:postgresql:9.4.1211.jre7'
     compile 'io.reactivex:rxandroid:1.2.1'
 
-    compile 'com.github.qwert2603:retrobase:1.0.4'
+    compile 'com.github.qwert2603:retrobase:1.1'
 }
