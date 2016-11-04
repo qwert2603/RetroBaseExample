@@ -18,19 +18,19 @@ public interface SpendDB {
     String URL = "jdbc:postgresql://192.168.1.26:5432/spend";
 
     @DBMakeRx(modelClassName = "com.qwert2603.retrobase_example.DataBaseRecord")
-    @DBQuery("SELECT * from spend_test")
+    @DBQuery("SELECT * from test_spend")
     ResultSet getAllRecords();
 
     @DBMakeRx(modelClassName = "com.qwert2603.retrobase_example.DataBaseRecord")
-    @DBQuery("SELECT * FROM spend_test ORDER BY date, id")
+    @DBQuery("SELECT * FROM test_spend ORDER BY date, id")
     ResultSet getAllRecordsOrdered() throws SQLException;
 
-    @DBMakeRx(modelClassName = "com.qwert2603.retrobase_example.Id")
-    @DBQuery("DELETE FROM spend_test WHERE id = ? returning id")
-    ResultSet deleteRecord(int id) throws SQLException;
+    @DBMakeRx
+    @DBQuery("DELETE FROM test_spend WHERE id = ?")
+    void deleteRecord(int id) throws SQLException;
 
     @DBMakeRx(modelClassName = "com.qwert2603.retrobase_example.Id")
-    @DBQuery("INSERT INTO spend_test (kind, value, date) VALUES (?, ?, ?) returning id")
+    @DBQuery("INSERT INTO test_spend (kind, value, date) VALUES (?, ?, ?) returning id")
     ResultSet insertRecord(String kind, int value, Date date) throws SQLException;
 
 }

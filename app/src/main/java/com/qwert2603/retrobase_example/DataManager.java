@@ -5,39 +5,36 @@ import com.qwert2603.retrobase.rx.generated.SpendDBRx;
 
 import java.util.List;
 
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
+import io.reactivex.Completable;
+import io.reactivex.Observable;
+import io.reactivex.Single;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
+
 
 public class DataManager {
 
     private SpendDB mSpendDB = new SpendDBImpl();
     private SpendDBRx mSpendDBRx = new SpendDBRx(mSpendDB);
 
-    public Observable<List<DataBaseRecord>> getAllRecordsFromDataBase() {
+    public Single<List<DataBaseRecord>> getAllRecordsFromDataBase() {
         return mSpendDBRx.getAllRecordsOrdered()
                 .toList()
-                .compose(applySchedulers());
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
     }
 
     public Observable<Id> insertRecord(DataBaseRecord dataBaseRecord) {
         return mSpendDBRx.insertRecord(dataBaseRecord.getKind(), dataBaseRecord.getValue(), dataBaseRecord.getDate())
-                .compose(applySchedulers());
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
     }
 
-    public Observable<Id> removeRecord(int id) {
+    public Completable removeRecord(int id) {
         return mSpendDBRx.deleteRecord(id)
-                .compose(applySchedulers());
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
     }
 
-    @SuppressWarnings("all")    // redundant casting
-    private final Observable.Transformer mTransformer = observable -> ((Observable) observable)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread());
-
-    @SuppressWarnings("unchecked")
-    private <T> Observable.Transformer<T, T> applySchedulers() {
-        return (Observable.Transformer<T, T>) mTransformer;
-    }
 
 }

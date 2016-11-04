@@ -27,7 +27,11 @@ public class MainActivity extends AppCompatActivity {
         dataManager.getAllRecordsFromDataBase()
                 .subscribe(records -> textView.setText(records.toString()));
 
-        dataManager.removeRecord(42)
-                .subscribe(id -> Toast.makeText(MainActivity.this, "Deleted record with id == " + id, Toast.LENGTH_SHORT).show());
+        int id = 3885;
+        dataManager.removeRecord(id)
+                .subscribe(
+                        () -> Toast.makeText(MainActivity.this, "Deleted record with id == " + id, Toast.LENGTH_SHORT).show(),
+                        Throwable::printStackTrace
+                );
     }
 }
